@@ -20,15 +20,14 @@ np.random.seed(1)
 
 X, Y = load_planar_dataset()
 # visualize the features
-plt.scatter(X[0, :], X[1, :], c=Y, s=40, cmap=plt.cm.Spectral)
+plt.scatter(X[0, :], X[1, :], c=Y[0], s=40, cmap=plt.cm.Spectral)
 
 # Simple logistic regression 
 logistic_classifier = sklearn.linear_model.LogisticRegressionCV()
 logistic_classifier.fit(X.T, Y.T)
 
 # Decision doundary plot for logistic classifier
-plot_decision_boundary(lambda x: logistic_classifier.predict(x), X, Y)
-
+plot_decision_boundary(lambda x: logistic_classifier.predict(x), X, Y[0])
 
 # Let take a look at the accuracy --> under 50%
 # LR does not work well when the data is not linerarly seperable
@@ -39,16 +38,17 @@ print('Accuracy of logistic regression: {}% percentage of correctly labelled dat
 parameters = nn_model(X, Y, n_h=4, epochs=10000, print_cost=True)
 
 # make predictions and plot the boundary
-plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)
+plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y[0])
 plt.title("Decision Boundary for hidden layer size " + str(4))
 
 predictions = predict(parameters, X)
 print ("Accuracy: {}%".format(float((np.dot(Y,predictions.T) + np.dot(1-Y,1-predictions.T))/float(Y.size)*100)))
 
+from sklearn.metrics import accuracy_score
+acc = accuracy_score(predictions.T, Y[0])
+acc
 
-
-
-
+plt.subplot(5,2,i+1)
 
 
 
