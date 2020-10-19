@@ -220,10 +220,11 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, iterations = 3000, 
         
 parameters = two_layer_NN(train_x, train_y, layers_dims = (n_x, n_h, n_y), iterations = 2500, print_cost=True)
 predictions_train = predict(train_x, train_y, parameters)
+pred_test = predict(test_x, test_y, parameters)
 
 parameters_L = L_layer_model(train_x, train_y, layers_dims, iterations = 2500, print_cost = True)
-pred_train = predict(train_x, train_y, parameters)
-pred_test = predict(test_x, test_y, parameters)
+pred_train_L = predict(train_x, train_y, parameters_L)
+pred_test_L = predict(test_x, test_y, parameters_L)
 
 
 # Test another image

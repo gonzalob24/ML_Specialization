@@ -200,7 +200,9 @@ def initialize_parameters_deep(layer_dims):
     L = len(layer_dims)
 
     for l in range(1, L):
-        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) / np.sqrt(layer_dims[l-1]) * 0.01
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) / np.sqrt(layer_dims[l-1])
+
+        # parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) * 0.01
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
         assert(parameters['W' + str(l)].shape == (layer_dims[l], layer_dims[l-1]))
@@ -233,6 +235,7 @@ def linear_forward(A, W, b):
     """
     
     Z = W.dot(A) + b
+    # Z = np.dot(W, A) + b
     
     assert(Z.shape == (W.shape[0], A.shape[1]))
     cache = (A, W, b)
@@ -264,11 +267,13 @@ def linear_activation_forward(A_prev, W, b, activation):
 
     """
     
-    Z, linear_cache = linear_forward(A_prev, W, b)
+    #Z, linear_cache = linear_forward(A_prev, W, b)
     
     if activation == "sigmoid":
+        Z, linear_cache = linear_forward(A_prev, W, b)
         A, activation_cache = sigmoid(Z)
     elif activation == "relu":
+        Z, linear_cache = linear_forward(A_prev, W, b)
         A, activation_cache = relu(Z)
 
     assert(A.shape == (W.shape[0], A_prev.shape[1]))
@@ -302,7 +307,7 @@ def deep_model_forward(X, parameters):
     A = X
     
     # number of layers in model
-    L = len(parameters) //2
+    L = len(parameters) // 2
     
     # [Linear Relu] * (L - 1). Add cache to caches list
     for layer in range(1, L):
@@ -341,7 +346,8 @@ def compute_cost(AL, Y):
     m = Y.shape[1]
     
     # compute the loss from AL to Y
-    cost = -(1/m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
+    cost = -(1./m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
+    # cost = -(1./m)*(np.dot(Y, np.log(AL).T) + np.dot(1-Y, np.log(1-AL).T))
     
     # makes sure cost's shape is what we expect (e.g. this turns [[17]] into 17).
     cost = np.squeeze(cost)
@@ -376,8 +382,8 @@ def linear_backward(dZ, cache):
     m = A_prev.shape[1]
 
     
-    dW = 1/m * np.dot(dZ, cache[0].T)
-    db = 1/m * np.sum(dZ, axis=1, keepdims=True)
+    dW = 1./m * np.dot(dZ, cache[0].T)
+    db = 1./m * np.sum(dZ, axis=1, keepdims=True)
     dA_prev = np.dot(cache[1].T, dZ)
     
     # check the dimensions
