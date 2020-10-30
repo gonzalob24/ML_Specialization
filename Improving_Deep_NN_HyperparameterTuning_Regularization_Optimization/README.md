@@ -12,13 +12,13 @@ ___
 	3. Learing rate
 	4. Activation functions
 
-	
-As I build machine learngin application, keep in mind that it is a highly iterative process. Come up with an idea, code it, and experiment with it alot. 
+	Note:
+	As I build machine learngin application, keep in mind that it is a highly iterative process. Come up with an idea, code it, and experiment with it alot. 
 
 <br>
 
 ### Train/Dev/Test Sets
--
+
 
 	Depending on how much data I have think about having a train, dev and test
 	set. Use a 60/20/20,  80/10/10...If not stick with 80/20 rule. 
@@ -32,8 +32,8 @@ As I build machine learngin application, keep in mind that it is a highly iterat
 <br>
 <br>
 
-### Bias - Variance
--
+## Bias - Variance
+
 
 **Bias**
 
@@ -58,7 +58,7 @@ As I build machine learngin application, keep in mind that it is a highly iterat
 	there will always be irrreducible error that can't be removed.
 	
 
-**Hoe does it affect the model**
+**How does it affect the model**
 
 
 	Both influence the outcome of the model. To improve bias/variance we can 
@@ -68,11 +68,34 @@ As I build machine learngin application, keep in mind that it is a highly iterat
 
 **Bias/variance Trade-off**
 
-	Explain..
+	Measure the train and dev set errors to diagnose the problem. 
+	
+		High Variance: 
+		Lets say train set gets 1% and dev/test set 11%. 
+
+		High Bias:
+		Train set has 15% and dev/test set has 16%
+
+		Both High variance and bias:
+		Train set has 15% and dev/test has 30%
+
+		Both Low variance and bias:
+		Train set 0.5% and dev/test set has 1%
 
 **Mathematically**
 
+
 	![image goes here]
+
+
+**Regularization**
+
+	...
+
+**Normalizing training sets**
+
+	...
+
 
 
 
