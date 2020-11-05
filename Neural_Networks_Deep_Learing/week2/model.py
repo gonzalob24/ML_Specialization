@@ -37,7 +37,7 @@ def lr_model(X_train, Y_train, X_test, Y_test, epochs=2000, learning_rate=0.005,
     # optimize parameters 
     parameters, gradients, costs = optimize_parameters(w, b, X_train, Y_train, epochs, learning_rate, print_cost)
     
-    # Get optoimied w and b
+    # Get optimized w and b
     w = parameters["w"]
     b = parameters["b"]
     
