@@ -44,11 +44,23 @@ plt.title("Decision Boundary for hidden layer size " + str(4))
 predictions = predict(parameters, X)
 print ("Accuracy: {}%".format(float((np.dot(Y,predictions.T) + np.dot(1-Y,1-predictions.T))/float(Y.size)*100)))
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 acc = accuracy_score(predictions.T, Y[0])
 acc
 
-plt.subplot(5,2,i+1)
+cm = confusion_matrix(Y[0], predictions.T)
+cm
 
+# Out of all the positive classes, how much we predicted correctly. 
+# It should be high as possible.
+recall =(177) / (177 + 15)
+recall
 
+# Out of all the positive classes we have predicted correctly, 
+# how many are actually positive.
+precision = (177) / (177 + 23)
+precision
 
+    # Out of all the classes, how much we predicted correctly
+accuracy = (177 + 185) / (177 + 23 + 15 + 185)
+accuracy

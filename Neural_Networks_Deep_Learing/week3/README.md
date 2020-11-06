@@ -11,5 +11,10 @@
   - [x] Derivatives of activation functions
   - [x] Gradient Descent for Neural Networks
   - [x] Random Initialization
-  
 - [x] Programming Assignment
+
+### Tuning the hidden layer size
+
+- I can change the size of the hidden layers to see if the accuracy score changes
+
+  as I increase or decease the size of the hidden layers.

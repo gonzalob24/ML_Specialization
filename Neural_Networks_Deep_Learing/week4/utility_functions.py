@@ -201,7 +201,6 @@ def initialize_parameters_deep(layer_dims):
 
     for l in range(1, L):
         parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) / np.sqrt(layer_dims[l-1])
-
         # parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) * 0.01
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
@@ -234,8 +233,8 @@ def linear_forward(A, W, b):
 
     """
     
-    Z = W.dot(A) + b
-    # Z = np.dot(W, A) + b
+    # Z = W.dot(A) + b
+    Z = np.dot(W, A) + b
     
     assert(Z.shape == (W.shape[0], A.shape[1]))
     cache = (A, W, b)
@@ -346,8 +345,10 @@ def compute_cost(AL, Y):
     m = Y.shape[1]
     
     # compute the loss from AL to Y
-    cost = -(1./m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
-    # cost = -(1./m)*(np.dot(Y, np.log(AL).T) + np.dot(1-Y, np.log(1-AL).T))
+    # cost = -(1/m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
+    cost = (1/m) * (-np.dot(Y, np.log(AL).T) - np.dot(1 - Y, np.log(1 - AL).T))
+
+    # cost = -(1/m)*(np.dot(Y, np.log(AL).T) + np.dot(1-Y, np.log(1-AL).T))
     
     # makes sure cost's shape is what we expect (e.g. this turns [[17]] into 17).
     cost = np.squeeze(cost)
@@ -382,9 +383,9 @@ def linear_backward(dZ, cache):
     m = A_prev.shape[1]
 
     
-    dW = 1./m * np.dot(dZ, cache[0].T)
+    dW = 1./m * np.dot(dZ, A_prev.T)
     db = 1./m * np.sum(dZ, axis=1, keepdims=True)
-    dA_prev = np.dot(cache[1].T, dZ)
+    dA_prev = np.dot(W.T, dZ)
     
     # check the dimensions
     assert (dA_prev.shape == A_prev.shape)
@@ -463,13 +464,16 @@ def deep_model_backward(AL, Y, caches):
     
     # Lth layer (sigmoid - linear) gradients
     current_cache = caches[-1]
+    # grads["dA" + str(L-1)], grads["dW" + str(L)], grads["db" + str(L)] = linear_activation_backward(dAL, current_cache, 'sigmoid')
     grads["dA" + str(L-1)], grads["dW" + str(L)], grads["db" + str(L)] = linear_backward(sigmoid_backward(dAL, current_cache[1]), current_cache[0])
-    
+
     # Loop from l=L-2 to l=0
     for l in reversed(range(L-1)):
         # lth layer: (rely - linear) gradients.
         current_cache = caches[l]
-        dA_prev_temp, dW_temp, db_temp = linear_backward(relu_backward(grads["dA" + str(l + 1)], current_cache[1]), current_cache[0])
+        dA_prev_temp, dW_temp, db_temp = linear_backward(relu_backward(grads["dA" + str(1 + l)], current_cache[1]), current_cache[0])
+
+        #dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 1)], current_cache, 'relu')
         grads["dA" + str(l)] = dA_prev_temp
         grads["dW" + str(l + 1)] = dW_temp
         grads["db" + str(l + 1)] = db_temp

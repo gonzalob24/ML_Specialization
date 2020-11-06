@@ -177,7 +177,7 @@ def backward_propagation(parameters, cache, X, Y):
     # Backward Prop
     # calc dW1, db1, dW2, db2 
     
-    # USe the equarions covered in class
+    # Use the equations covered in class
     dZ2 = A2 - Y
     dW2 = (1/m) * np.dot(dZ2, A1.T)
     db2 = (1/m) * np.sum(dZ2, axis=1, keepdims=True)
