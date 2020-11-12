@@ -201,6 +201,8 @@ def initialize_parameters_deep(layer_dims):
 
     for l in range(1, L):
         parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) / np.sqrt(layer_dims[l-1])
+        # Use "He" with relu activation function
+        # parameters["W" + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1]) * np.sqrt(2/layer_dims[l - 1])
         # parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) * 0.01
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
@@ -346,8 +348,8 @@ def compute_cost(AL, Y):
     m = Y.shape[1]
     
     # compute the loss from AL to Y
-    # cost = -(1/m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
-    cost = (1/m) * (-np.dot(Y, np.log(AL).T) - np.dot(1 - Y, np.log(1 - AL).T))
+    cost = -(1/m) * np.sum(np.multiply(Y, np.log(AL)) + np.multiply(1 - Y, np.log(1 - AL)))
+    # cost = (1/m) * (-np.dot(Y, np.log(AL).T) - np.dot(1 - Y, np.log(1 - AL).T))
 
     # cost = -(1/m)*(np.dot(Y, np.log(AL).T) + np.dot(1-Y, np.log(1-AL).T))
     

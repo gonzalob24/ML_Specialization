@@ -159,7 +159,7 @@ def two_layer_NN(X, Y, layers_dims, learning_rate=0.0075, iterations=3000, print
     return parameters
 
 # L layer NN 
-def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, iterations = 3000, print_cost=False):#lr was 0.009
+def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, iterations = 3000, print_cost=False, lmbd=0, keep_prob=1):#lr was 0.009
     """
     Implements a L-layer neural network: Linear->RELU*(L-1)->Linear->SIGMOID.
     
