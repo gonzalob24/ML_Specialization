@@ -267,7 +267,8 @@ def linear_activation_forward(A_prev, W, b, activation):
     """
     
     #Z, linear_cache = linear_forward(A_prev, W, b)
-    
+    # linear_cache --> stores A_prev, w, b
+    # activation_cache --> stores Z
     if activation == "sigmoid":
         Z, linear_cache = linear_forward(A_prev, W, b)
         A, activation_cache = sigmoid(Z)
